@@ -1,0 +1,59 @@
+spec-version: 0.30.0
+name: esqueleto-seek-pagination
+author: Joseph Sumabat
+synopsis: efficient cursor based pagination for esqueleto
+description: Paginate an arbitrary esqueleto query that allows based on checkpoints and ranges
+category: Development
+maintainer: josephrsumabat@gmail.com
+github: josephsumabat/esqueleto-seek-pagination
+license: MIT
+version: 0.1.0
+build-type: Simple
+extra-source-files:
+  - CHANGELOG.md
+  - README.md
+
+dependencies:
+  - base >= 4.17.0 && < 4.19
+  - esqueleto >= 3.5.11 && < 3.6
+  - persistent >= 2.14.6 && < 2.15
+  - safe >= 0.3.19 && < 0.4
+  - transformers >= 0.6.1 && < 0.7
+
+default-extensions:
+- FlexibleContexts
+- OverloadedRecordDot
+- OverloadedStrings
+- NoFieldSelectors
+- LambdaCase
+
+ghc-options:
+  - -Wall
+
+library:
+  source-dirs: src
+  ghc-options:
+  - -fwrite-ide-info
+  - -hiedir test/TestData/.hiefiles
+
+tests:
+  haskell-project-template-test:
+    dependencies:
+    - esqueleto-seek-pagination
+    defaults: hspec/hspec@main
+
+flags:
+  dev:
+    description: Defer type errors for development
+    manual: true
+    default: false
+
+when:
+  - condition: flag(dev)
+    ghc-options:
+    - -fwrite-ide-info
+    - -hiedir .hiefiles
+    - -fdefer-type-errors
+    - -fno-defer-typed-holes
+    - -Werror=deferred-type-errors
+    - -Werror=deferred-out-of-scope-variables

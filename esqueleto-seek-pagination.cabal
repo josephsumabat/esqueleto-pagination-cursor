@@ -1,0 +1,81 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           esqueleto-seek-pagination
+version:        0.1.0
+synopsis:       efficient cursor based pagination for esqueleto
+description:    Paginate an arbitrary esqueleto query that allows based on checkpoints and ranges
+category:       Development
+homepage:       https://github.com/josephsumabat/esqueleto-seek-pagination#readme
+bug-reports:    https://github.com/josephsumabat/esqueleto-seek-pagination/issues
+author:         Joseph Sumabat
+maintainer:     josephrsumabat@gmail.com
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    CHANGELOG.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/josephsumabat/esqueleto-seek-pagination
+
+flag dev
+  description: Defer type errors for development
+  manual: True
+  default: False
+
+library
+  exposed-modules:
+      Database.Esqueleto.SeekPagination
+  other-modules:
+      Paths_esqueleto_seek_pagination
+  hs-source-dirs:
+      src
+  default-extensions:
+      FlexibleContexts
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      LambdaCase
+  ghc-options: -Wall -fwrite-ide-info -hiedir test/TestData/.hiefiles
+  build-depends:
+      base >=4.17.0 && <4.19
+    , esqueleto >=3.5.11 && <3.6
+    , persistent >=2.14.6 && <2.15
+    , safe >=0.3.19 && <0.4
+    , transformers >=0.6.1 && <0.7
+  default-language: Haskell2010
+  if flag(dev)
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
+
+test-suite haskell-project-template-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_esqueleto_seek_pagination
+  hs-source-dirs:
+      test
+  default-extensions:
+      FlexibleContexts
+      OverloadedRecordDot
+      OverloadedStrings
+      NoFieldSelectors
+      LambdaCase
+  ghc-options: -Wall
+  build-depends:
+      base >=4.17.0 && <4.19
+    , esqueleto >=3.5.11 && <3.6
+    , esqueleto-seek-pagination
+    , hspec ==2.*
+    , persistent >=2.14.6 && <2.15
+    , safe >=0.3.19 && <0.4
+    , transformers >=0.6.1 && <0.7
+  default-language: Haskell2010
+  if flag(dev)
+    ghc-options: -fwrite-ide-info -hiedir .hiefiles -fdefer-type-errors -fno-defer-typed-holes -Werror=deferred-type-errors -Werror=deferred-out-of-scope-variables
+  build-tool-depends: hspec-discover:hspec-discover == 2.*
